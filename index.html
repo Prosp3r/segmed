@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html  >
+<head>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/logo4.png" type="image/x-icon">
+  <meta name="description" content="">
+  
+  <title>Network Gaming</title>
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+<style>
+div.scorebox {
+  position:absolute; 
+  margin: 10px;
+  background-color:aliceblue;
+  border: 1px dotted #FFF;
+  opacity: 0.9;
+  max-width: 25%;
+  min-width: 25%;
+  top: 10px;
+  float: left; 
+  height: 95%;
+}
+    
+div.livefeedbox {
+  position:fixed; 
+  margin: 10px;
+  margin:0 auto;
+  background-color: #FFF;
+  border: 1px solid #FFF;
+  opacity: 0.7;
+  min-width: 45%;
+  top: 20px;
+  float:left; 
+  min-height: 95%;
+  height: 95%;
+  vertical-align: top;
+  left: 27.2%;
+    overflow-y: auto;
+}
+    
+
+.feedContainer{
+        min-height: 945px;
+        overflow-y: auto;
+}        
+
+    
+div.userkeyboard {
+  position:absolute; 
+  margin: 10px;
+  background-color: #FFF;
+  border: 1px dotted #FFF;
+  opacity: 0.7;
+  max-width: 25%;
+  min-width: 25%;
+  top: 10px;
+  right: 10px;
+  min-height: 60%;
+  height:95%;
+}
+    
+ 
+div.introboard {
+  position:relative; 
+  margin: 10px;
+  background-color: #FFF;
+  border: 1px dotted #FFF;
+  opacity: 0.9;
+  max-width: 30%;
+  min-width: 30%;
+  top: 10px;
+  right: 10px;
+  min-height: 60%;
+  height:58%;
+  padding: 20px;
+}    
+
+    div.fixedd{
+        position: fixed;
+    }
+    
+    
+div.left{
+  float: left;   
+}
+
+div.livefeedbox p {
+  margin: 5%;
+}
+    
+div.leadboard{
+    border: 2px solid #FFF;
+    margin: 0 auto;
+}
+
+.band {
+    border: 1px solid #FFFFFF;
+    height: 30px;
+    position: relative;
+    width: 100%;
+}
+    
+.alltimebestbar{
+    background-color:palevioletred;
+    margin: 0 auto;
+    
+    height: auto;
+    margin: 2px;
+    padding: 2px;
+    font-family: sans-serif;
+    color:aliceblue;
+} 
+.alltimegreenbar {
+    background-color:green;
+    margin: 0 auto;
+    
+    height: auto;
+    margin: 2px;
+    padding: 2px;
+    font-family: sans-serif;
+    color:aliceblue;
+    }    
+
+.alltimeredbar {
+    background-color:red;
+    margin: 0 auto;
+    
+    height: auto;
+    margin: 2px;
+    padding: 2px;
+    font-family: sans-serif;
+    color:aliceblue;
+    }    
+.greybar {
+    background-color:darkgrey;
+    margin: 0 auto;
+    
+    height: auto;
+    margin: 2px;
+    padding: 2px;
+    font-family: sans-serif;
+    color:aliceblue;    
+    }
+.eventbar{
+    background-color:aqua;
+    margin: 0 auto;
+    text-align: left;
+    height: auto;
+    margin: 2px;
+    margin-top: 5px;
+    padding: 5px;
+    font-family: sans-serif;
+    font-size: 0.9em;
+    color:black;
+    border-left: 5px;
+    border-left-color: aliceblue;
+}     
+
+
+
+.regularbar{
+    background-color:coral;
+    margin: 0 auto;
+    text-align: center;
+    height: auto;
+    margin: 2px;
+    padding: 2px;
+    font-family: sans-serif;
+    color:aliceblue;
+} 
+    
+.finetext {
+    font-family: sans-serif;
+    font-size: 15px;
+    
+    }
+    
+.whitetext{
+    font-family: sans-serif;
+    font-size: 15px;
+    color:#fff;
+    }    
+.smalltext{
+    
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+.annountcementtext {
+    font-family: sans-serif;
+    font-size: 25px;
+    color: red;
+    text-align: center;
+    margin: 30px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    }    
+    
+    
+    
+.lefttext {
+    text-align: left;
+    /*margin-left: 5px;*/
+    }
+.centertext {
+    text-align: center;
+    margin-left: 5px;
+    }
+.righttext {
+    text-align: right;
+    margin-left: 5px;
+    }
+
+    
+    .counter {
+        font-family: sans-serif;
+        font-size: 25px;
+        color: red;
+        text-align: center;
+        margin: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }    
+</style>    
+    
+    
+  </head>
+  
+<body>
+<section class="header6 cid-sngGkbQLqX mbr-fullscreen mbr-parallax-background" id="firstsection" style="display:;">
+    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
+    </div>
+    <div id="fentriesbox" style="margin: 0 auto; width: 30%;" class="introboard">
+            <p class="centertext finetext">Play the random champion.<br> Select any two numbers from 1 to 10 and a name</p>
+            <p class=" smalltext lefttext">You win if you either score 21 or highest number at the end of the round.<br>
+                At each round, the computer selects a random number 1-10. 
+                <br>1. Any of your number is selected = +5 
+                <br>2. Any number between those you selected = +5 -(upperBound - LowerBound)</p>
+            
+           <div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Entry 1</label>
+              </div>
+              <select class="custom-select" id="fentry1">
+                
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            
+            <div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Entry 2</label>
+              </div>
+              <select class="custom-select" id="fentry2">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            
+            
+            
+            <div class="input-group input-group-sm mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+              <input type="text" maxlength="8" name="fusername" id="fusername" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            
+            <div class="mbr-section-btn align-center">
+                            
+                            <button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="observe()">Observe</button>
+                            <button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="firstsend()">Play</button>
+            </div>
+          </div>
+</section>
+
+  <section class="header6 cid-sngGkbQLqX mbr-fullscreen mbr-parallax-background" id="gamesection" style="display: none;">
+
+    
+
+    <div class="mbr-overlay" style="opacity: 0.7; background-color: rgb(35, 35, 35);">
+    </div>
+      
+          
+    <div class="scorebox">
+        <div class="topScorer leadboard band" id="topscorer">
+            
+        <div id="livesocreboard" style="display:;">
+            <div id="currentGameTitle" class="alltimebestbar lefttext">Playing  </div>
+            <!-- div id="alltimebest" class="greybar lefttext">Current Game: Loud-Bamboo </div -->
+            <div id="livetopscore" class="alltimegreenbar lefttext"> </div>
+            <div class="livescorebox finetext lefttext" id="livescorefeed">
+                <!-- div id="alltimebest" class="alltimebestbar lefttext">RainMaker : &emsp;&emsp;&emsp;2 </div>
+                <div id="alltimebest" class="alltimebestbar lefttext">James : &emsp;&emsp;&emsp;12 </div>
+                <div id="alltimebest" class="alltimebestbar lefttext">Julie : &emsp;&emsp;&emsp;4 </div>
+                <div id="alltimebest" class="alltimebestbar lefttext">Jane : &emsp;&emsp;&emsp;12 </div -->
+            </div>
+            <div id="livelowscore" class="alltimeredbar lefttext"> </div>
+            </div>
+            
+             <p class="centertext finetext smalltext"><br><br> Brought to you by <br> 
+                 <img src="assets/images/logo4.png" style="width: 25%;" />
+            </p>
+            <!-- p class="centertext finetext"><br> </p -->
+            
+            <div>
+            <p id="countdown" class="counter" style="display: none;">10</p>
+            <!-- p id="totalclients">10</p -->
+                
+                <div class="centertext" id="topscorerdisplay" style="display: none;"><br>All time top scorer<br>
+                <p class="smalltext centertext" id="alltimescorer"></p>
+                    <img src="assets/images/alltimewinner.png" style="width: 25%;" />
+                </div>
+                
+            </div>
+            
+            
+            
+        </div>
+        
+    </div>
+      
+      <div class="livefeedbox finetext lefttext">
+        <div class="topScorer leadboard band" id="topscorer">
+            <div id="alltimebest" class="alltimebestbar" style="position: fixed;">&nbsp;Live game feed . . . &nbsp;</div>
+            
+            <div id="livefeed">    
+            </div>
+            <!-- div id="alltimebest" class="eventbar">&raquo;  Game prompt-mammal created, will start when at least 3 players join...accepting entries </div -->
+            
+            
+                
+            
+            <!-- p class="annountcementtext">This is a spacial message from the game admin.<br> 21 point WINNER!!!.<br> JOHN BOSCO SCORES 21 Points!!!</p -->
+        </div>
+        
+        
+       
+        
+    </div>
+      
+      <div class="userkeyboard">
+        <div class="topScorer leadboard band" id="topscorer">
+            
+            <div id="alltimebest" class="alltimebestbar">Upcoming games </div>
+            <div id="upcomingGames" class="regularbar lefttext"></div>
+            <!-- div id="alltimebest" class="regularbar">Hndy-Snail</div>
+            <div id="alltimebest" class="regularbar">Rude-Monkey</div>
+            <div id="alltimebest" class="regularbar">Big-Doodle</div>
+            <div id="alltimebest" class="regularbar">Cape-Climber</div>
+            <div id="alltimebest" class="regularbar">Silly-Dove</div -->
+            <div id="entriesClosedbox" style="display: none;">
+                <p class="centertext finetext"><br> Entries now closed please wait to place your next entry<br> Select any two numbers </p>
+            </div>
+            
+            <div id="entriesbox">
+            <p class="centertext finetext"><br> Place your next entry<br> Select any two numbers </p>
+            
+           <div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Entry 1</label>
+              </div>
+              <select class="custom-select" id="entry1">
+                
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            
+            <div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Entry 2</label>
+              </div>
+              <select class="custom-select" id="entry2">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            
+            
+            
+            <div class="input-group input-group-sm mb-3" style="max-width: 80%; margin: 0 auto;">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+              <input type="text" maxlength="8" name="username" id="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            
+            <div class="mbr-section-btn align-center">
+                            <!-- a class="btn btn-sm btn-secondary display-4" href="#" id="observe">Observe</a -->
+                            <!-- a class="btn btn-sm btn-primary btn-white-outline display-4" href="#" id="play">Play</a -->
+                            <button id="play" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="send()">Play</button>
+            </div>
+          </div>
+            <!-- div class="row justify-content-md-center fixedd">
+                <div class="mbr-white col-md-10">
+                        <h1 class="mbr-section-title align-center mbr-bold pb-3 mbr-fonts-style display-1"><span style="font-weight: normal;">
+                            Welcome to lucky dip game</span></h1>
+                        <p class="mbr-text align-center pb-3 mbr-fonts-style display-7">
+                            Choose two numbers from 1 to 10 for a chance to win.</p>
+                        <div class="mbr-section-btn align-center">
+                            <a class="btn btn-sm btn-secondary display-4" href="#" id="observe">Observe</a>
+                            <a class="btn btn-sm btn-white-outline display-4" href="#" id="play">Play</a>
+                        </div>
+                </div>
+            </div -->
+            <br >
+            <p class="smalltext centertext" id="totalclients"></p>
+            
+            <p class=" smalltext lefttext" style="max-height: 80px; margin: 10px; overflow-y: auto;"><strong>RULES: </strong> You win if you either score 21 or highest number at the end of the round.<br>
+                At each round, the computer selects a random number 1-10. 
+                <br>1. Any of your number is selected = +5 
+                <br>2. Any number between those you selected = +5 -(upperBound - LowerBound)</p>
+        </div>
+        
+    </div>
+    
+
+    <!-- div class="container">
+        <div class="row justify-content-md-center">
+            <div class="mbr-white col-md-10">
+                <h1 class="mbr-section-title align-center mbr-bold pb-3 mbr-fonts-style display-1"><span style="font-weight: normal;">
+                    Welcome to lucky dip game</span></h1>
+                <p class="mbr-text align-center pb-3 mbr-fonts-style display-7">
+                    Choose two numbers from 1 to 10 for a chance to win.</p>
+                <div class="mbr-section-btn align-center"><a class="btn btn-md btn-secondary display-4" href="#" id="observe">Observe</a>
+                        <a class="btn btn-md btn-white-outline display-4" href="#" id="play">Play</a></div>
+            </div>
+        </div>
+        
+        
+    </div -->
+      
+      
+    
+      
+      
+     
+
+    
+</section>
+
+
+  <script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/parallax/jarallax.min.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  <script>
+  
+      
+    /*<div id="alltimebest" class="eventbar">&raquo;  Game prompt-mammal created, will start when at least 3 players join...accepting entries </div>*/  
+    var livefeed = document.getElementById("livefeed");
+    var gamelistfeed = document.getElementById("upcomingGames");
+    var livescorefeed = document.getElementById("livescorefeed");
+    var totalclientsfeed = document.getElementById("totalclients");
+    var alltimescorerfeed = document.getElementById("alltimescorer");
+    var livetopscorefeed = document.getElementById("livetopscore");
+    var livelowscorefeed = document.getElementById("livelowscore");
+    var currentGameTitlefeed = document.getElementById("currentGameTitle");
+    
+    
+    //http://3.81.161.205:8080/
+    let socket = new WebSocket("ws://localhost:8080/ws")  
+    console.log("Attempting Socket connection")
+      
+      socket.onopen = (event) => {
+          console.log("Successfully connected to server", event);
+          socket.send("Hello-from-client")
+      }
+      
+      socket.onmessage = (msg) => {
+          console.log(msg);
+          //mx = JSON.stringify(msg.data)
+          m = JSON.parse(msg.data);
+          //livefeed.innerHTML += "Server: " + msg.data + "\n";
+          toChannel = m.channel;
+          content = m.body;
+          //GenMQ - General Message Queue
+          if (toChannel == 'GenMQ') {
+              livefeed.innerHTML = "<div id=\"alltimebest\" class=\"eventbar\">"+m.body+"</div>"+livefeed.innerHTML
+              livefeed.scrollTop = livefeed.scrollHeight;
+              //document.getElementById("alltimebest").classList.add('eventbar');
+
+          }
+          
+          //AnnouncmentMQ - General Message Queue Announcement
+          if (toChannel == 'AnnouncmentMQ'){
+              livefeed.innerHTML = "<p class=\"annountcementtext\"><br><br><br>"+m.body+"!<br><br><br></p>"+livefeed.innerHTML
+              //livefeed.scrollTop = livefeed.scrollHeight;
+          }
+          
+          //LiveScoreMQ - Live Score message Queue LiveScoreMQ
+          if (toChannel == 'LiveScoreMQ') {
+              livescorefeed.innerHTML = "<div id=\"alltimebest\" class=\"alltimebestbar lefttext\">"+m.body+"</div>"
+          }
+          
+          /*/LiveGameMQ - Live Score message Queue
+          if (toChannel == 'LiveGameMQ') {
+              livescorefeed.innerHTML = "<div id=\"alltimebest\" class=\"eventbar\">&raquo; "+m.body+"</div>"+livescorefeed.innerHTML
+              //livescorefeed.scrollTop = livescorefeed.scrollHeight*2;
+          }*/
+          
+          //
+          if(toChannel == 'LeadBoardMQ') {
+              
+          }
+          
+          //
+          if(toChannel == 'GameListMQ') {
+              gamelistfeed.innerHTML = m.body
+              //gamelistfeed.innerHTML = "<div id=\"alltimebest\" class=\"eventbar\">&raquo; "+m.body+"</div>"+gamelistfeed.innerHTML
+          }
+          
+          if(toChannel == 'TotalclientsMQ'){
+              totalclientsfeed.innerHTML = m.body;
+          }
+          
+          if(toChannel == 'CountdownMQ'){
+              countDown(m.body);
+          }
+          
+          if(toChannel == 'AlltimescorerMQ'){
+              alltimescorerfeed.innerHTML = m.body;
+              document.getElementById("topscorerdisplay").style.display = ''; //show top scorer
+          }
+          
+          if(toChannel == 'LivetopscorerMQ'){
+              livetopscorefeed.innerHTML = m.body;
+          }
+          
+          if(toChannel == 'LivelowscorerMQ'){
+              livelowscorefeed.innerHTML = m.body;
+              //turn on livesocreboard
+              document.getElementById("livesocreboard").style.display = ''; //show livesocreboard
+              
+          }
+          
+          if(toChannel == 'CurrentgametitlefeedMQ'){
+              currentGameTitlefeed.innerHTML = m.body;
+          }
+          
+          
+         // alert("Message from server : " + JSON.stringify(msg))
+      }
+      
+      socket.onclose = (event) => {
+          console.log("Socket closed connection: ", event);
+      }
+      
+      socket.onerror = (error) => {
+          console.log("Socket encountered error: ", error);
+      }
+      
+      //scroll up
+      function updateScroll(){
+        var element = document.getElementById("livefeed");
+        element.scrollTop = element.scrollHeight;
+        
+      }
+      
+    
+    function send() {
+        
+        username = document.getElementById("username").value;
+        if (username == "") {
+            alert("Name must be filled out");
+            return false;
+        }else{
+            input1 = document.getElementById("entry1").value;
+            input2 = document.getElementById("entry2").value;
+            username = document.getElementById("username").value;
+            input = username + "====" + input1 + "====" + input2
+            socket.send(input);
+            
+            document.getElementById("entry1").value = "";
+            document.getElementById("entry2").value = "";
+            document.getElementById("username").value = "";   
+        }
+    }
+      
+    function firstsend() {
+        
+        username = document.getElementById("fusername").value;
+        
+        if (username == "") {
+            alert("Name must be filled out");
+            return false;
+        }else{
+            input1 = document.getElementById("fentry1").value;
+            input2 = document.getElementById("fentry2").value;
+            username = document.getElementById("fusername").value;
+            
+        
+            document.getElementById("fentry1").value = "";
+            document.getElementById("fentry2").value = "";
+            document.getElementById("fusername").value = "";
+            
+            input = username + "====" + input1 + "====" + input2
+            socket.send(input); //send data
+            //emty entries
+            document.getElementById("firstsection").style.display = 'none';
+            document.getElementById("gamesection").style.display = '';
+            
+        }
+    }
+      
+    function observe(){
+        document.getElementById("firstsection").style.display = 'none';
+        document.getElementById("gamesection").style.display = '';
+    }
+      
+      
+    
+      
+      function countDown(seconds){
+          if (seconds != "-"){
+            
+              
+            document.getElementById("countdown").style.display = '';
+            //document.getElementById("topscorerdisplay").style.display = 'none'; //hide top scorer
+            document.getElementById("countdown").innerHTML = "<p class='smalltext'>Next game starts in<br>"+ seconds + "s";
+              //disable inputs
+              document.getElementById("entriesbox").style.display = 'none';
+              document.getElementById("entriesClosedbox").style.display = '';
+              //hide live score board
+              document.getElementById("livesocreboard").style.display = 'none'; //show livesocreboard
+          }else{
+            document.getElementById("countdown").style.display = 'none';
+            //document.getElementById("topscorerdisplay").style.display = ''; //show top scorer
+              //enable inputs
+            document.getElementById("entriesbox").style.display = '';
+            document.getElementById("entriesClosedbox").style.display = 'none';
+          }
+      }
+      
+      
+      function showTopScorer(){
+          document.getElementById("topscorer").style.display = '';
+      }
+      
+      function hideTopScorer(){
+          document.getElementById("topscorer").style.display = 'none';
+      }
+
+
+
+    
+  </script>
+  
+</body>
+</html>
