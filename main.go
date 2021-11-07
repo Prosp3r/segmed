@@ -5,9 +5,14 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
+	"path/filepath"
+
+	// "path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -16,7 +21,14 @@ import (
 
 	petname "github.com/dustinkirkland/golang-petname"
 	"github.com/gorilla/websocket"
+
+	// "github.com/rwcarlsen/goexif/exif"
+	// "github.com/rwcarlsen/goexif/mknote"
+
 	//"github.com/kennygrant/sanitize"
+	//  "github.com/xiam/exif"
+	"github.com/xor-gate/goexif2/exif"
+	"github.com/xor-gate/goexif2/mknote"
 )
 
 /*
@@ -1082,8 +1094,15 @@ func init() {
 	rand.Seed(time.Now().UTC().UnixNano())
 }
 
+var mutex = &sync.Mutex{}
+
 func main() {
 
+	go saveState()
+
+	/*
+	::::::::::::::::::::::::
+	*/
 	//use wait groups to keep main on hold
 	var wg sync.WaitGroup
 
@@ -1150,6 +1169,138 @@ func main() {
 
 }
 
+//:::::READ FILES IN IMAGES FOLDER
+
+type Medimages struct {
+	ID         string      `json:"id"`
+	Name       string      `json:"name"`
+	Path       string      `json:"path"`
+	Extention  string      `json:"extension"`
+	ModTime    time.Time   `json:"modtime"`
+	Mode       os.FileMode `json:"mode"`
+	Size       int64       `json:"size"`
+	Meta       Imagemeta   `json:"imagemeta"`
+	Flagstatus string      `json:"flagstatus"`
+}
+
+type Imagemeta struct {
+}
+
+var ImageBank []Medimages
+
+func loadImages() {
+	// result := GetImageMetaData()
+	// fmt.Println(result)
+	err := filepath.Walk("assets/medimages", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() == false {
+			ext := strings.Split(info.Name(), ".")
+			if len(ext) > 1 && ext[1] == "jpeg" {
+				fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
+				imagemeta := GetImageMetaData(path)
+				// fmt.Printf("Image Meta : %v \n\n", imagemeta)
+
+				im := Medimages{
+					randomString(12),
+					info.Name(),
+					path,
+					ext[1],
+					info.ModTime(),
+					info.Mode(),
+					info.Size(),
+					imagemeta,
+					"",
+				}
+				ImageBank = append(ImageBank, im)
+			}
+		}
+
+		return nil
+	})
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Printf("Total images read : %v \n\n", len(ImageBank))
+}
+
+//UpdateImage - update tag status
+func UpdateImage(id, status string) (*bool, error) {
+	var updated bool = false
+
+	for _, v := range ImageBank {
+		if v.ID == id {
+			v.Flagstatus = status
+			updated = true
+			return &updated, nil
+		}
+	}
+	msg := "Could not find an image with the ID :" + id
+	return nil, errors.New(msg)
+}
+
+//saveState - will save the state of image choices made so far to file each second interval
+func saveState() {
+	filename := "segmed.csv"
+	fmt.Printf("Saving state of tags to %v \n", filename)
+	for {
+		content, err := json.Marshal(ImageBank)
+		if err != nil {
+			fmt.Printf("Failed converting ImageBank to Json : %v \n\n", err.Error())
+		}
+		output := []byte(string(content))
+		mutex.Lock()
+		openFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			fmt.Printf("Failed to save file with error : %v \n\n", err.Error())
+		}
+
+		err = ioutil.WriteFile(filename, output, 0644)
+		openFile.Close()
+		mutex.Unlock()
+
+		time.Sleep(time.Second)
+	}
+}
+
+// func GetImageMetaData(imagePath string) Imagemeta {
+func GetImageMetaData(path string) Imagemeta {
+	// imageFile := "assets/medimages/passport_photo_edit.jpeg"
+	f, err := os.Open(path)
+	if err != nil {
+		fmt.Printf("Could not open image : %v \n\n", path)
+	}
+
+	// Optionally register camera makenote data parsing - currently Nikon and
+	// Canon are supported.
+	exif.RegisterParsers(mknote.All...)
+
+	_, err = exif.Decode(f)
+	if err != nil {
+		fmt.Printf("Exif Could not decode exif data %v \n\n", err.Error())
+	}
+
+	// camModel, _ := x.Get(exif.Model) // normally, don't ignore errors!
+	// fmt.Println(camModel.StringVal())
+
+	// focal, _ := x.Get(exif.FocalLength)
+	// numer, denom, _ := focal.Rat2(0) // retrieve first (only) rat. value
+	// fmt.Printf("%v/%v", numer, denom)
+
+	// // Two convenience functions exist for date/time taken and GPS coords:
+	// tm, _ := x.DateTime()
+	// fmt.Println("Taken: ", tm)
+
+	// lat, long, _ := x.LatLong()
+	// fmt.Println("lat, long: ", lat, ", ", long)
+
+	var imageMeta Imagemeta
+
+	return imageMeta
+}
+
 /*
 ::::::::::::::::::::::::::::WEB SERVER CODE:::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -1172,7 +1323,7 @@ var WriteMsgType int
 //StartWebServer - Will start the webserver on given port
 func StartWebServer(port int, wg *sync.WaitGroup) {
 	//func StartWebServer(port int) {
-
+	loadImages()
 	defer wg.Done()
 	//SITE USER INTERFACE ENDPOINTS
 	ports := ":" + strconv.Itoa(port)
@@ -1183,6 +1334,7 @@ func StartWebServer(port int, wg *sync.WaitGroup) {
 	http.HandleFunc("/ws", servews)
 
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	//http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
 
 	log.Println("Web server running on port " + ports)
 	log.Fatal(http.ListenAndServe(ports, nil))
@@ -1231,7 +1383,6 @@ func reader(conn *websocket.Conn) {
 
 		//fmt.Printf("Message from socket client =======> %s \n", string(p))
 	}
-
 }
 
 func writeMessageToSock(conn *websocket.Conn, msg []byte) (int, error) {
