@@ -1098,10 +1098,18 @@ var mutex = &sync.Mutex{}
 
 func main() {
 
-	go saveState()
+	//load previous state of decisions made if any
+	readState, err := loadState()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	if *readState == true {
+		go saveState()
+	}
 
 	/*
-	::::::::::::::::::::::::
+		::::::::::::::::::::::::
 	*/
 	//use wait groups to keep main on hold
 	var wg sync.WaitGroup
@@ -1187,34 +1195,40 @@ type Imagemeta struct {
 }
 
 var ImageBank []Medimages
+var ImageCheck = make(map[string]string)
+var FileStorePath = "assets/medimages"
+var StateFilename = "segmed.json"
 
-func loadImages() {
-	// result := GetImageMetaData()
-	// fmt.Println(result)
-	err := filepath.Walk("assets/medimages", func(path string, info os.FileInfo, err error) error {
+func loadNewFoundImages() {
+	err := filepath.Walk(FileStorePath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 
 		if info.IsDir() == false {
-			ext := strings.Split(info.Name(), ".")
-			if len(ext) > 1 && ext[1] == "jpeg" {
-				fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
-				imagemeta := GetImageMetaData(path)
-				// fmt.Printf("Image Meta : %v \n\n", imagemeta)
+			if _, ok := ImageCheck[path]; !ok {
 
-				im := Medimages{
-					randomString(12),
-					info.Name(),
-					path,
-					ext[1],
-					info.ModTime(),
-					info.Mode(),
-					info.Size(),
-					imagemeta,
-					"",
+				ext := strings.Split(info.Name(), ".")
+
+				if len(ext) > 1 && ext[1] == "jpeg" {
+					fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
+					imagemeta := GetImageMetaData(path)
+
+					ImageId := randomString(12)
+					im := Medimages{
+						ImageId,
+						info.Name(),
+						path,
+						ext[1],
+						info.ModTime(),
+						info.Mode(),
+						info.Size(),
+						imagemeta,
+						"",
+					}
+					ImageBank = append(ImageBank, im)
+					ImageCheck[path] = ImageId
 				}
-				ImageBank = append(ImageBank, im)
 			}
 		}
 
@@ -1241,26 +1255,43 @@ func UpdateImage(id, status string) (*bool, error) {
 	return nil, errors.New(msg)
 }
 
+//loadState - will atempt to recover he saved state of the decisions made previously from storage(.csv or db)
+func loadState() (*bool, error) {
+	fmt.Printf("Loading state from %v \n", StateFilename)
+	dataFile, err := ioutil.ReadFile(StateFilename)
+	if err != nil {
+		fmt.Printf("Could not find %v creating new \n", StateFilename)
+	}
+
+	_ = json.Unmarshal([]byte(dataFile), &ImageBank)
+	//load unique checker
+	for _, v := range ImageBank {
+		ImageCheck[v.Path] = v.ID
+	}
+	read := true
+	return &read, nil
+}
+
 //saveState - will save the state of image choices made so far to file each second interval
 func saveState() {
-	filename := "segmed.csv"
-	fmt.Printf("Saving state of tags to %v \n", filename)
+
+	fmt.Printf("Saving state of tags to %v \n", StateFilename)
 	for {
-		content, err := json.Marshal(ImageBank)
+		content, err := json.MarshalIndent(ImageBank, "", " ")
 		if err != nil {
 			fmt.Printf("Failed converting ImageBank to Json : %v \n\n", err.Error())
 		}
-		output := []byte(string(content))
+		// output := []byte(string(content))
 		mutex.Lock()
-		openFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
+		openFile, err := os.OpenFile(StateFilename, os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			fmt.Printf("Failed to save file with error : %v \n\n", err.Error())
 		}
 
-		err = ioutil.WriteFile(filename, output, 0644)
+		err = ioutil.WriteFile(StateFilename, content, 0644)
 		openFile.Close()
 		mutex.Unlock()
-
+		loadNewFoundImages()
 		time.Sleep(time.Second)
 	}
 }
@@ -1323,7 +1354,7 @@ var WriteMsgType int
 //StartWebServer - Will start the webserver on given port
 func StartWebServer(port int, wg *sync.WaitGroup) {
 	//func StartWebServer(port int) {
-	loadImages()
+	loadNewFoundImages()
 	defer wg.Done()
 	//SITE USER INTERFACE ENDPOINTS
 	ports := ":" + strconv.Itoa(port)
