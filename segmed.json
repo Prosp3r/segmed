@@ -1,6 +1,6 @@
 [
  {
-  "id": "DMKXZRNZROWA",
+  "id": "VKLBXTWBKKVC",
   "name": "How-Do-CT-Scans-Work.jpeg",
   "path": "assets/medimages/How-Do-CT-Scans-Work.jpeg",
   "extension": "jpeg",
@@ -8,10 +8,10 @@
   "mode": 420,
   "size": 34897,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "BYTIKMBKJEXR",
+  "id": "NHJHYKQWXNVT",
   "name": "RadAbd-86.jpeg",
   "path": "assets/medimages/RadAbd-86.jpeg",
   "extension": "jpeg",
@@ -22,7 +22,7 @@
   "flagstatus": "TAGGED"
  },
  {
-  "id": "GVGVQHFQRFQU",
+  "id": "ORETORCEHSPC",
   "name": "become-medical-sales-rep.jpeg",
   "path": "assets/medimages/become-medical-sales-rep.jpeg",
   "extension": "jpeg",
@@ -30,10 +30,10 @@
   "mode": 420,
   "size": 21337,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "MIHDZVOWZODY",
+  "id": "TGDLFBXXMGMI",
   "name": "cmsv2_63e69945-90c7.jpeg",
   "path": "assets/medimages/cmsv2_63e69945-90c7.jpeg",
   "extension": "jpeg",
@@ -41,10 +41,21 @@
   "mode": 420,
   "size": 32444,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "JADGDIGSUFBL",
+  "id": "UBPMISZKEFID",
+  "name": "become-medical-sales-rep.jpeg",
+  "path": "assets/medimages/become-medical-sales-rep.jpeg",
+  "extension": "jpeg",
+  "modtime": "2021-11-05T11:43:40+01:00",
+  "mode": 420,
+  "size": 21337,
+  "imagemeta": {},
+  "flagstatus": "TAGGED"
+ },
+ {
+  "id": "JVKUGIAGTWBJ",
   "name": "file-20180629-117374-fk5vwz.jpeg",
   "path": "assets/medimages/file-20180629-117374-fk5vwz.jpeg",
   "extension": "jpeg",
@@ -52,10 +63,10 @@
   "mode": 420,
   "size": 72022,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "EYSVTQTYSQRF",
+  "id": "PLIFSFOBLXDH",
   "name": "jayz.jpeg",
   "path": "assets/medimages/jayz.jpeg",
   "extension": "jpeg",
@@ -66,7 +77,7 @@
   "flagstatus": ""
  },
  {
-  "id": "KKQACLQKGAYE",
+  "id": "YPEKEASHIPXC",
   "name": "medical-imaging.jpeg",
   "path": "assets/medimages/medical-imaging.jpeg",
   "extension": "jpeg",
@@ -77,7 +88,7 @@
   "flagstatus": ""
  },
  {
-  "id": "OETBPKJEVYND",
+  "id": "MWPQVUBLXGRY",
   "name": "medicine-doctor-holding.jpeg",
   "path": "assets/medimages/medicine-doctor-holding.jpeg",
   "extension": "jpeg",
@@ -88,7 +99,7 @@
   "flagstatus": ""
  },
  {
-  "id": "ZDPWYCAXMPDF",
+  "id": "ZQHWMTOZGNZG",
   "name": "mri-scan-neck.jpeg",
   "path": "assets/medimages/mri-scan-neck.jpeg",
   "extension": "jpeg",
@@ -96,10 +107,10 @@
   "mode": 420,
   "size": 141548,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "LOBEUPFLWNPD",
+  "id": "BUROFHVKYSZZ",
   "name": "mri-scan.jpeg",
   "path": "assets/medimages/mri-scan.jpeg",
   "extension": "jpeg",
@@ -110,18 +121,7 @@
   "flagstatus": ""
  },
  {
-  "id": "VNJSFXWSGIKF",
-  "name": "passport_photo_edit.jpeg",
-  "path": "assets/medimages/passport_photo_edit.jpeg",
-  "extension": "jpeg",
-  "modtime": "2021-04-09T10:17:21+01:00",
-  "mode": 420,
-  "size": 24221,
-  "imagemeta": {},
-  "flagstatus": ""
- },
- {
-  "id": "HCSSUNZRYPXP",
+  "id": "OEVJGLSKEEGA",
   "name": "photo-149565379.jpeg",
   "path": "assets/medimages/photo-149565379.jpeg",
   "extension": "jpeg",
@@ -132,7 +132,7 @@
   "flagstatus": ""
  },
  {
-  "id": "BKEXFZZUHZLW",
+  "id": "PTRFLDJKOTEC",
   "name": "photo-1498050.jpeg",
   "path": "assets/medimages/photo-1498050.jpeg",
   "extension": "jpeg",
@@ -140,10 +140,10 @@
   "mode": 420,
   "size": 115117,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "PLFESOFPZEMZ",
+  "id": "IELAKMUMALUR",
   "name": "photo-15181520.jpeg",
   "path": "assets/medimages/photo-15181520.jpeg",
   "extension": "jpeg",
@@ -151,10 +151,21 @@
   "mode": 420,
   "size": 169789,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "BKNRBFVGHKRO",
+  "id": "MQISHORAWFRZ",
+  "name": "file-20180629-117374-fk5vwz.jpeg",
+  "path": "assets/medimages/file-20180629-117374-fk5vwz.jpeg",
+  "extension": "jpeg",
+  "modtime": "2021-11-05T11:44:55+01:00",
+  "mode": 420,
+  "size": 72022,
+  "imagemeta": {},
+  "flagstatus": "TAGGED"
+ },
+ {
+  "id": "CKJRWOLBWGEO",
   "name": "photo-153021.jpeg",
   "path": "assets/medimages/photo-153021.jpeg",
   "extension": "jpeg",
@@ -162,10 +173,10 @@
   "mode": 420,
   "size": 54840,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "KMQBHNURFKCG",
+  "id": "VWCLCWEBAHGY",
   "name": "photo-1530497.jpeg",
   "path": "assets/medimages/photo-1530497.jpeg",
   "extension": "jpeg",
@@ -173,10 +184,10 @@
   "mode": 420,
   "size": 88508,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "PMSOTCLJPHLI",
+  "id": "WRVYLPFFXCCG",
   "name": "photo-15321878.jpeg",
   "path": "assets/medimages/photo-15321878.jpeg",
   "extension": "jpeg",
@@ -184,10 +195,10 @@
   "mode": 420,
   "size": 137992,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "AAMSHXEKEUNA",
+  "id": "UODWOZCARJUO",
   "name": "photo-15760862133.jpeg",
   "path": "assets/medimages/photo-15760862133.jpeg",
   "extension": "jpeg",
@@ -195,21 +206,10 @@
   "mode": 420,
   "size": 93742,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "SMQGYHJFRVGW",
-  "name": "become-medical-sales-rep.jpeg",
-  "path": "assets/medimages/become-medical-sales-rep.jpeg",
-  "extension": "jpeg",
-  "modtime": "2021-11-05T11:43:40+01:00",
-  "mode": 420,
-  "size": 21337,
-  "imagemeta": {},
-  "flagstatus": ""
- },
- {
-  "id": "YBVCNTGXQFFH",
+  "id": "FVTIBUNUZZXZ",
   "name": "photo-1579684385.jpeg",
   "path": "assets/medimages/photo-1579684385.jpeg",
   "extension": "jpeg",
@@ -220,7 +220,7 @@
   "flagstatus": ""
  },
  {
-  "id": "PKDAFRZTXEKJ",
+  "id": "XYWWPDLZEZWW",
   "name": "photo-160339.jpeg",
   "path": "assets/medimages/photo-160339.jpeg",
   "extension": "jpeg",
@@ -228,21 +228,10 @@
   "mode": 420,
   "size": 63568,
   "imagemeta": {},
-  "flagstatus": ""
+  "flagstatus": "TAGGED"
  },
  {
-  "id": "ONVGMEDKZQKC",
-  "name": "picx.jpeg",
-  "path": "assets/medimages/picx.jpeg",
-  "extension": "jpeg",
-  "modtime": "2021-08-14T17:46:58+01:00",
-  "mode": 420,
-  "size": 111604,
-  "imagemeta": {},
-  "flagstatus": ""
- },
- {
-  "id": "MGYIDHAHPZMW",
+  "id": "PVYLCGOJGJTP",
   "name": "w93429234v9.jpeg",
   "path": "assets/medimages/w93429234v9.jpeg",
   "extension": "jpeg",
@@ -253,13 +242,13 @@
   "flagstatus": ""
  },
  {
-  "id": "JTMWGGJCAZOK",
-  "name": "photo-1579684385.jpeg",
-  "path": "assets/medimages/photo-1579684385.jpeg",
+  "id": "WRGJHCBQKSVE",
+  "name": "photo-153021.jpeg",
+  "path": "assets/medimages/photo-153021.jpeg",
   "extension": "jpeg",
-  "modtime": "2021-11-05T11:47:44+01:00",
+  "modtime": "2021-11-05T11:47:56+01:00",
   "mode": 420,
-  "size": 131593,
+  "size": 54840,
   "imagemeta": {},
   "flagstatus": ""
  }

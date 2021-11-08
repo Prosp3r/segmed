@@ -1088,8 +1088,8 @@ func main() {
 	args := flag.Args()
 
 	if len(args) < 3 {
-		fmt.Println("Please specify the following : a number_of_games port_to_run_web_interface minimum_player_number")
-		fmt.Println("E.G: $ go run game.go 3 2020 2")
+		fmt.Println("Welcome to segmed image gallery picker")
+		fmt.Println("Server is starting at port 8080")
 		//os.Exit(1)
 		alt := []string{"3", "8080", "2"}
 		args = alt
@@ -1180,7 +1180,7 @@ func loadNewFoundImages() {
 				ext := strings.Split(info.Name(), ".")
 
 				if len(ext) > 1 && ext[1] == "jpeg" {
-					fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
+					//fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
 
 					go GetImageMetaData(path)
 
@@ -1233,7 +1233,7 @@ func UpdateImage(id, status string) {
 
 //loadState - will atempt to recover he saved state of the decisions made previously from storage(.csv or db)
 func loadState() (*bool, error) {
-	fmt.Printf("Loading state from %v \n", StateFilename)
+	//fmt.Printf("Loading state from %v \n", StateFilename)
 	dataFile, err := ioutil.ReadFile(StateFilename)
 	if err != nil {
 		fmt.Printf("Could not find %v creating new \n", StateFilename)
@@ -1251,13 +1251,13 @@ func loadState() (*bool, error) {
 //saveState - will save the state of image choices made so far to file each second interval
 func saveState() {
 
-	fmt.Printf("Saving state of tags to %v \n", StateFilename)
-	for i, v := range ImageBank {
-		if v.Flagstatus == "TAGGED" {
-			fmt.Println(i, " T ==>", v)
-		}
-		fmt.Println(i, " ==> NT")
-	}
+	//fmt.Printf("Saving state of tags to %v \n", StateFilename)
+	// for i, v := range ImageBank {
+	// 	// if v.Flagstatus == "TAGGED" {
+	// 	// 	fmt.Println(i, " T ==>", v)
+	// 	// }
+	// 	fmt.Println(i, " ==> NT")
+	// }
 
 	for {
 		content, err := json.MarshalIndent(ImageBank, "", " ")
@@ -1392,7 +1392,7 @@ func StartWebServer(port int, wg *sync.WaitGroup) {
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	//http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
 
-	log.Println("Web server running on port " + ports)
+	log.Println("Web server running on http://localhost" + ports)
 	log.Fatal(http.ListenAndServe(ports, nil))
 }
 
