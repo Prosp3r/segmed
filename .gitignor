@@ -1,2 +1,2 @@
-/builds
-.code-workspace
+builds/
+*.code-workspace
