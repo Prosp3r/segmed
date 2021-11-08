@@ -10,6 +10,7 @@ So all that's needed is to:
 1. navigate through the production folder and copy the appropriate main binary to the home folder and 
 
     e.g Lunix: from the home directory run 
+    
     ```cp builds/production/linux/386/main .```
     
     ```./main```
@@ -27,5 +28,3 @@ Same for Linux, Windows, Android, etc.
 
 Alternatively a working copy of this app is running on my private server
 [http://167.114.169.85:8080](http://167.114.169.85:8080)
-
-
