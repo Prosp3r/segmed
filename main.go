@@ -1237,7 +1237,6 @@ func loadNewFoundImages() {
 	if err != nil {
 		log.Println(err)
 	}
-	fmt.Printf("Total images read : %v \n\n", len(ImageBank))
 }
 
 //UpdateImage - update tag status
