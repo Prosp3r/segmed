@@ -813,39 +813,6 @@ func bradCastleadBoard() {
 	//	}
 }
 
-//bradCastleadBoard -
-func broadCastGameList() {
-
-	for {
-		x := 1
-		msg := new(Message)
-		var GamesList string
-		var LiveGamesList string
-
-		//Make a fresh copy of games lists
-		//range Leadboard
-		Mutlock.Lock()
-		for i, v := range GlistDynamic {
-			//sort.SliceStable(JackTieScorer, func(i, j int) bool { return JackTieScorer[i].PlayerName < JackTieScorer[j].PlayerName })
-			if v == "Waiting" {
-
-				GamesList += "<div id=\"alltimebest\" class=\"regularbar lefttext\">" + "&nbsp;" + i + " &raquo status [" + v + "]</div>"
-				//"<div id=\"alltimebest\" class=\"regularbar\">"+v.Name +"</div>"
-				x++
-			}
-
-			if v == "Live" {
-				LiveGamesList = "<div id=\"alltimebest\" class=\"eventbar lefttext\">" + "&nbsp;" + i + " &raquo status [" + v + "]</div>"
-			}
-		}
-		Mutlock.Unlock()
-		MQ.enQ(msg.Wrap("GameListMQ", LiveGamesList+GamesList))
-		MQ.enQ(msg.Wrap("LiveGameMQ", LiveGamesList))
-		Delay(2, "s")
-	}
-
-}
-
 func braodCastLiveScores(LiveScore string) {
 	msg := new(Message)
 	MQ.enQ(msg.Wrap("LiveScoreMQ", LiveScore))
@@ -902,7 +869,8 @@ func InitiateGame(gameCount int) int {
 	}
 	//
 	//bradCastleadBoard()
-	go broadCastGameList()
+	go broadCastImageList()
+	//broadCastGameList()
 	//Games on Board
 	//braodCastLiveScores()
 	//publish entries
@@ -1242,9 +1210,7 @@ func loadNewFoundImages() {
 }
 
 func tagImage(imageid string) {
-	//fmt.Println("Tagged reached =>", imageid)
 	UpdateImage(imageid, "TAGGED")
-
 }
 
 func untagImage(imageid string) {
@@ -1259,23 +1225,11 @@ func UpdateImage(id, status string) {
 			v.Flagstatus = status
 			val := &ImageBank[i]
 			val.Flagstatus = status
-			return
+			//return
 		}
 	}
 	mutex.Unlock()
-
-	for i, v := range ImageBank {
-		if v.Flagstatus == "TAGGED" {
-			fmt.Println(i, " T ==>", v)
-		}
-		fmt.Println(i, " ==> NT")
-	}
 }
-
-// func (i *Medimages) Tag(imageid string) {
-
-// 	*&i.Flagstatus = "TAGGED"
-// }
 
 //loadState - will atempt to recover he saved state of the decisions made previously from storage(.csv or db)
 func loadState() (*bool, error) {
@@ -1321,7 +1275,7 @@ func saveState() {
 		openFile.Close()
 		mutex.Unlock()
 		loadNewFoundImages()
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 3)
 	}
 }
 
@@ -1357,6 +1311,50 @@ func GetImageMetaData(path string) {
 	// fmt.Println("lat, long: ", lat, ", ", long)
 
 	// var imageMeta Imagemeta
+}
+
+//bradCastleadBoard -
+// func broadCastGameList() {
+func broadCastImageList() {
+	//var ImageList string
+	// x := 1
+	msg := new(Message)
+	var GamesList string
+	var LiveGamesList string
+	var LiveImageList string
+
+	for {
+
+		//Make a fresh copy of games lists
+		//range Leadboard
+		var bgColor string
+		var tagMeShow string
+		var unTagMeShow string
+
+		//flush
+		LiveImageList = ""
+
+		Mutlock.Lock()
+		for _, v := range ImageBank {
+
+			if v.Flagstatus == "" {
+				bgColor = "lightgrey"
+				tagMeShow = ""
+				unTagMeShow = "none"
+			} else {
+				bgColor = "black"
+				tagMeShow = "none"
+				unTagMeShow = ""
+			}
+			// LiveImageList += "<div id=\"fentriesbox\" class=\"\" style=\"margin: 0 auto; padding:15px; width:235px; background-color: " + bgColor + "; margin: 10px; float:left;\"><p class=\"centertext finetext\"><img src=\" " + v.Path + "\" width=\"200\" height=\"200\" /></p><p class=\" smalltext lefttext\">Name: Plastic Skeleton <br />Date Created: 2021-11-05 at 11:46:34 <br />Size: 34897 <br />File Type: JPEG <br />Author: N/A<br /></p><div class=\"mbr-section-btn align-center\"><button style=\"display:" + tagMeShow + ";\" id=\"fplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"tagme('" + v.ID + "', ' " + v.Path + "')\">Tag me</button><button style=\"display:" + unTagMeShow + ";\" id=\"ufplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"untagme('" + v.ID + "', '" + v.Path + "')\">Free me</button></div></div>"
+			LiveImageList += "<div id=\"fentriesbox\" class=\"\" style=\"margin: 0 auto; padding:15px; width:235px; background-color: " + bgColor + "; margin: 10px; float:left;\"><p class=\"centertext finetext\"><img src=\" " + v.Path + "\" width=\"200\" height=\"200\" /></p><p class=\" smalltext lefttext\">Name: " + v.Name + " <br />Date Created: 2021-10-03 <br />Size: " + strconv.FormatInt(v.Size, 10) + " <br />File Type: " + v.Extention + " <br /></p><div class=\"mbr-section-btn align-center\"><button style=\"display:" + tagMeShow + ";\" id=\"fplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"tagme('" + v.ID + "', ' " + v.Path + "')\">Tag me</button><button style=\"display:" + unTagMeShow + ";\" id=\"ufplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"untagme('" + v.ID + "', '" + v.Path + "')\">Free me</button></div></div>"
+		}
+
+		Mutlock.Unlock()
+		MQ.enQ(msg.Wrap("GameListMQ", LiveGamesList+GamesList))
+		MQ.enQ(msg.Wrap("LiveScoreMQ", LiveImageList))
+		Delay(1, "s")
+	}
 }
 
 /*
@@ -1396,9 +1394,6 @@ func StartWebServer(port int, wg *sync.WaitGroup) {
 
 	log.Println("Web server running on port " + ports)
 	log.Fatal(http.ListenAndServe(ports, nil))
-
-	//log.Println("Website running on port " + port)
-	//http.ListenAndServe(port, nil)
 }
 
 func reader(conn *websocket.Conn) {
@@ -1415,8 +1410,6 @@ func reader(conn *websocket.Conn) {
 		//process message from client instead of just logging
 		log.Println(string(p))
 		msgparam := strings.Split(string(p), "====")
-		fmt.Println(msgparam[0])
-		fmt.Println(msgparam[1])
 		if len(msgparam) > 1 {
 			ImagePath := msgparam[2]
 			Imageid := msgparam[1]
@@ -1475,64 +1468,29 @@ func servews(w http.ResponseWriter, r *http.Request) {
 			delete(clients, ws)
 			break
 		}
-		//Mutlock.Unlock()
 
-		//err := ws.ReadJSON(&msg)
 		WriteMsgType = messageType
 		clientsConn[ws] = WriteMsgType
 		MQ.enQ(msg.Wrap("TotalclientsMQ", "Total observers:"+strconv.Itoa(len(clientsConn))))
 
-		//process message from client instead of just logging
-		// log.Println("PP =>", string(p))
-
 		msgparam := strings.Split(string(p), "====")
 
-		if len(msgparam) > 1 {
-			// ImagePath := msgparam[2]
-			Imageid := msgparam[1]
-
-			// fmt.Println(ImagePath)
-			// fmt.Println(Imageid)
-			tagImage(Imageid)
-
-			// if _, ok := ImageCheck[ImagePath]; ok {
-			// 	tagImage(Imageid)
-			// }
+		if msgparam[0] == "tagme" {
+			if len(msgparam) > 1 {
+				// ImagePath := msgparam[2]
+				Imageid := msgparam[1]
+				tagImage(Imageid)
+			}
 		}
-		// msgparam := strings.Split(string(p), "====")
-		// if len(msgparam) > 1 {
-		// 	PlayerName := msgparam[0]
-		// 	entry1, err := strconv.Atoi(msgparam[1])
-		// 	RunError(err)
-		// 	entry2, err := strconv.Atoi(msgparam[2])
-		// 	RunError(err)
-		// 	playerID := AddUser(PlayerName)
 
-		// 	//add player
-
-		// 	var totalScore int = 0
-		// 	// TODO: check for empty or invalid entries
-		// 	// TODO: sort entries for ease of use for threshold marker
-		// 	if entry1 > entry2 {
-		// 		entry1, entry2 = entry2, entry1
-		// 	}
-
-		// 	ent := [3]int{int(entry1), int(entry2), int(totalScore)}
-		// 	AddPlay(playerID, PlayerName, ent)
-
-		// 	MQ.enQ(msg.Wrap("GenMQ", "Total plays made so far: "+strconv.Itoa(len(Plays))))
-		// 	//broadcast <- msg
-		// 	//Delay(1, "s")
-		// }
-
-		// Send the newly received message to the broadcast channel
-		//broadcast <- msg
+		if msgparam[0] == "untagme" {
+			if len(msgparam) > 1 {
+				// ImagePath := msgparam[2]
+				Imageid := msgparam[1]
+				untagImage(Imageid)
+			}
+		}
 	}
-
-	//start general message broad caster channel
-	//go broadCaster()
-	// Make sure we close the connection when the function returns
-
 }
 
 //socketBCast - live channel broadcast to web sockets
@@ -1560,9 +1518,7 @@ func socketBCast() {
 					delete(clients, client)
 					delete(clientsConn, client)
 				}
-
 			}
-
 		}
 		Delay(10, "ms")
 	}

@@ -236,74 +236,18 @@ div.leadboard{
   </head>
   
 <body>
+<p style="height: 50px; margin:0 auto; padding:10px; margin: 10px;" align="center"><img src="assets/images/logo4.png" height="30px" width="30px"/> SEGMED GALLERY</p>
+
 <section class="header6 cid-sngGkbQLqX mbr-fullscreen mbr-parallax-background" id="firstsection" style="display:;">
     <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
     </div>
-    <!-- div id="fentriesbox" class="introboard" style="margin: 0 auto; width:250px;" -->
-    <div id="fentriesbox" class="" style="margin: 0 auto; padding:15px; width:235px; background-color:lightgray; margin: 10px;">
-            <p class="centertext finetext">
-              <img src="assets/medimages/photo-153021.jpeg" width="200" height="200" />
-            </p>
-            <p class=" smalltext lefttext">Name: Plastic Skeleton <br />
-              Date Created: 2021-11-05 at 11:46:34 <br />
-              Size: 34897 <br />
-              File Type: JPEG <br />
-              Author: N/A<br />
-             
-            </p>
-            
-           <!-- div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
-              <!-- div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Entry 1</label>
-              </div -->
-              <!-- select class="custom-select" id="fentry1">
-                
-                <option value="1" selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div -->
-            
-            <!-- div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
-              <!-- div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Entry 2</label>
-              </div -->
-              <!-- select class="custom-select" id="fentry2">
-                <option value="1" selected>1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div -->
 
-            
-            
-            
-            <!--div class="input-group input-group-sm mb-3" style="max-width: 80%; margin: 0 auto;">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@</span>
-              </div>
-              <input type="text" maxlength="8" name="fusername" id="fusername" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-            </div -->
-            
-            <div class="mbr-section-btn align-center">
-                            <!-- button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="observe()">Observe</button -->
-                <button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="firstsend('RKUDUQGVYENP')">Tag me</button>
-            </div>
-          </div>
+    
+    <!-- div id="fentriesbox" class="introboard" style="margin: 0 auto; width:250px;" -->
+    <div id="imagelistfeed" style="width:95%; height:100%; margin:0 auto;">
+
+    
+    </div>
 </section>
 
   <section class="header6 cid-sngGkbQLqX mbr-fullscreen mbr-parallax-background" id="gamesection" style="display: none;">
@@ -386,6 +330,8 @@ div.leadboard{
             </div>
             
             <div id="entriesbox">
+
+
             <p class="centertext finetext"><br> Place your next entry<br> Select any two numbers </p>
             
            <div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
@@ -440,6 +386,9 @@ div.leadboard{
                             <!-- a class="btn btn-sm btn-primary btn-white-outline display-4" href="#" id="play">Play</a -->
                             <button id="play" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="send()">Play</button>
             </div>
+
+
+            
           </div>
             <!-- div class="row justify-content-md-center fixedd">
                 <div class="mbr-white col-md-10">
@@ -503,6 +452,9 @@ div.leadboard{
     /*<div id="alltimebest" class="eventbar">&raquo;  Game prompt-mammal created, will start when at least 3 players join...accepting entries </div>*/  
     var livefeed = document.getElementById("livefeed");
     var gamelistfeed = document.getElementById("upcomingGames");
+
+    var imagelistfeed = document.getElementById("imagelistfeed");
+
     var livescorefeed = document.getElementById("livescorefeed");
     var totalclientsfeed = document.getElementById("totalclients");
     var alltimescorerfeed = document.getElementById("alltimescorer");
@@ -544,6 +496,7 @@ div.leadboard{
           //LiveScoreMQ - Live Score message Queue LiveScoreMQ
           if (toChannel == 'LiveScoreMQ') {
               livescorefeed.innerHTML = "<div id=\"alltimebest\" class=\"alltimebestbar lefttext\">"+m.body+"</div>"
+              imagelistfeed.innerHTML = "<div id=\"alltimebest\" class=\"alltimebestbar lefttext\">"+m.body+"</div>"
           }
           
           /*/LiveGameMQ - Live Score message Queue
@@ -553,8 +506,9 @@ div.leadboard{
           }*/
           
           //
-          if(toChannel == 'LeadBoardMQ') {
-              
+          if(toChannel == 'LiveImageListMQ') {
+            alert("Images sent");
+            imagelistfeed.innerHTML = m.body
           }
           
           //
@@ -630,33 +584,31 @@ div.leadboard{
         }
     }
       
-    function firstsend(imageid) {
-        
-        //username = document.getElementById("fusername").value;
-        
-        //if (username == "") {
-        //    alert("Name must be filled out");
-        //    return false;
-        //}else{
-        //    input1 = document.getElementById("fentry1").value;
-        //    input2 = document.getElementById("fentry2").value;
-        //    username = document.getElementById("fusername").value;
-            
-        
-        //    document.getElementById("fentry1").value = "";
-        //    document.getElementById("fentry2").value = "";
-        //    document.getElementById("fusername").value = "";
+    function tagme(imageid, path) {
             tagimage = "tagme"
-            path = "assets/medimages/How-Do-CT-Scans-Work.jpeg"
+            //path = "assets/medimages/How-Do-CT-Scans-Work.jpeg"
             //input = username + "====" + input1 + "====" + input2
             input = tagimage + "====" + imageid + "====" + path;
             socket.send(input); //send data
             //emty entries
-            document.getElementById("firstsection").style.display = '';
-            document.getElementById("gamesection").style.display = 'none';
+            document.getElementById("fplay"+imageid).style.display = 'none';
+            document.getElementById("ufplay"+imageid).style.display = '';
             
         //}
     }
+
+    function untagme(imageid, path) {
+      tagimage = "untagme"
+      //path = "assets/medimages/How-Do-CT-Scans-Work.jpeg"
+      //input = username + "====" + input1 + "====" + input2
+      input = tagimage + "====" + imageid + "====" + path;
+      socket.send(input); //send data
+      //emty entries
+      document.getElementById("fplay"+imageid).style.display = '';
+      document.getElementById("ufplay"+imageid).style.display = 'none';
+      
+  //}
+}
       
     function observe(){
         document.getElementById("firstsection").style.display = 'none';
