@@ -1338,7 +1338,7 @@ func broadCastImageList() {
 		for _, v := range ImageBank {
 
 			if v.Flagstatus == "" {
-				bgColor = "lightgrey"
+				bgColor = "darkgrey"
 				tagMeShow = ""
 				unTagMeShow = "none"
 			} else {
@@ -1347,7 +1347,7 @@ func broadCastImageList() {
 				unTagMeShow = ""
 			}
 			// LiveImageList += "<div id=\"fentriesbox\" class=\"\" style=\"margin: 0 auto; padding:15px; width:235px; background-color: " + bgColor + "; margin: 10px; float:left;\"><p class=\"centertext finetext\"><img src=\" " + v.Path + "\" width=\"200\" height=\"200\" /></p><p class=\" smalltext lefttext\">Name: Plastic Skeleton <br />Date Created: 2021-11-05 at 11:46:34 <br />Size: 34897 <br />File Type: JPEG <br />Author: N/A<br /></p><div class=\"mbr-section-btn align-center\"><button style=\"display:" + tagMeShow + ";\" id=\"fplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"tagme('" + v.ID + "', ' " + v.Path + "')\">Tag me</button><button style=\"display:" + unTagMeShow + ";\" id=\"ufplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"untagme('" + v.ID + "', '" + v.Path + "')\">Free me</button></div></div>"
-			LiveImageList += "<div id=\"fentriesbox\" class=\"\" style=\"margin: 0 auto; padding:15px; width:235px; background-color: " + bgColor + "; margin: 10px; float:left;\"><p class=\"centertext finetext\"><img src=\" " + v.Path + "\" width=\"200\" height=\"200\" /></p><p class=\" smalltext lefttext\">Name: " + v.Name + " <br />Date Created: 2021-10-03 <br />Size: " + strconv.FormatInt(v.Size, 10) + " <br />File Type: " + v.Extention + " <br /></p><div class=\"mbr-section-btn align-center\"><button style=\"display:" + tagMeShow + ";\" id=\"fplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"tagme('" + v.ID + "', ' " + v.Path + "')\">Tag me</button><button style=\"display:" + unTagMeShow + ";\" id=\"ufplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"untagme('" + v.ID + "', '" + v.Path + "')\">Free me</button></div></div>"
+			LiveImageList += "<div id=\"fentriesbox\" class=\"\" style=\"margin: 0 auto; padding:15px; width:235px; background-color: " + bgColor + "; margin: 10px; float:left;\"><p class=\"centertext finetext\"><img src=\" " + v.Path + "\" width=\"200\" height=\"200\" /></p><p class=\" smalltext lefttext\">Name: " + v.Name + " <br />Date Created: 2021-10-03 <br />Size: " + strconv.FormatInt(v.Size, 10) + " <br />File Type: " + v.Extention + " <br /></p><div class=\"mbr-section-btn align-center\"><button style=\"display:" + tagMeShow + ";\" id=\"fplay" + v.ID + "\" class=\"btn btn-sm btn-primary btn-white-outline display-4\" onclick=\"tagme('" + v.ID + "', ' " + v.Path + "')\">Tag me</button><button style=\"display:" + unTagMeShow + ";\" id=\"ufplay" + v.ID + "\" class=\"btn btn-sm btn-success btn-white-outline display-4\" onclick=\"untagme('" + v.ID + "', '" + v.Path + "')\">Untag me</button></div></div>"
 		}
 
 		Mutlock.Unlock()
