@@ -9,7 +9,9 @@ So all that's needed is to:
 
 1. navigate through the production folder and copy the appropriate main binary to the home folder and 
 
-    e.g Lunix: from the home directory run ```cp builds/production/linux/386/main .```
+    e.g Lunix: from the home directory run 
+    ```cp builds/production/linux/386/main .```
+    
     ```./main```
 
     Visit the server through the browser on port 8080
