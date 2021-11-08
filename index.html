@@ -239,14 +239,18 @@ div.leadboard{
 <section class="header6 cid-sngGkbQLqX mbr-fullscreen mbr-parallax-background" id="firstsection" style="display:;">
     <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(35, 35, 35);">
     </div>
-    <div id="fentriesbox" style="margin: 0 auto; width: 10%;" class="introboard">
+    <!-- div id="fentriesbox" class="introboard" style="margin: 0 auto; width:250px;" -->
+    <div id="fentriesbox" class="" style="margin: 0 auto; padding:15px; width:235px; background-color:lightgray; margin: 10px;">
             <p class="centertext finetext">
               <img src="assets/medimages/photo-153021.jpeg" width="200" height="200" />
             </p>
-            <p class=" smalltext lefttext">Yoou win if you either score 21 or highest number at the end of the round.<br>
-                At each round, the computer selects a random number 1-10. 
-                <br>1. Any of your number is selected = +5 
-                <br>2. Any number between those you selected = +5 -(upperBound - LowerBound)</p>
+            <p class=" smalltext lefttext">Name: Plastic Skeleton <br />
+              Date Created: 2021-11-05 at 11:46:34 <br />
+              Size: 34897 <br />
+              File Type: JPEG <br />
+              Author: N/A<br />
+             
+            </p>
             
            <!-- div class="input-group mb-3" style="max-width: 80%; margin: 0 auto;">
               <!-- div class="input-group-prepend">
@@ -297,7 +301,7 @@ div.leadboard{
             
             <div class="mbr-section-btn align-center">
                             <!-- button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="observe()">Observe</button -->
-                            <button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="firstsend()">Save</button>
+                <button id="fplay" class="btn btn-sm btn-primary btn-white-outline display-4" onclick="firstsend('RKUDUQGVYENP')">Tag me</button>
             </div>
           </div>
 </section>
@@ -626,30 +630,32 @@ div.leadboard{
         }
     }
       
-    function firstsend() {
+    function firstsend(imageid) {
         
-        username = document.getElementById("fusername").value;
+        //username = document.getElementById("fusername").value;
         
-        if (username == "") {
-            alert("Name must be filled out");
-            return false;
-        }else{
-            input1 = document.getElementById("fentry1").value;
-            input2 = document.getElementById("fentry2").value;
-            username = document.getElementById("fusername").value;
+        //if (username == "") {
+        //    alert("Name must be filled out");
+        //    return false;
+        //}else{
+        //    input1 = document.getElementById("fentry1").value;
+        //    input2 = document.getElementById("fentry2").value;
+        //    username = document.getElementById("fusername").value;
             
         
-            document.getElementById("fentry1").value = "";
-            document.getElementById("fentry2").value = "";
-            document.getElementById("fusername").value = "";
-            
-            input = username + "====" + input1 + "====" + input2
+        //    document.getElementById("fentry1").value = "";
+        //    document.getElementById("fentry2").value = "";
+        //    document.getElementById("fusername").value = "";
+            tagimage = "tagme"
+            path = "assets/medimages/How-Do-CT-Scans-Work.jpeg"
+            //input = username + "====" + input1 + "====" + input2
+            input = tagimage + "====" + imageid + "====" + path;
             socket.send(input); //send data
             //emty entries
-            document.getElementById("firstsection").style.display = 'none';
-            document.getElementById("gamesection").style.display = '';
+            document.getElementById("firstsection").style.display = '';
+            document.getElementById("gamesection").style.display = 'none';
             
-        }
+        //}
     }
       
     function observe(){

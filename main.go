@@ -1177,7 +1177,7 @@ func main() {
 
 }
 
-//:::::READ FILES IN IMAGES FOLDER
+//:::::FILES IN IMAGES FOLDER
 
 type Medimages struct {
 	ID         string      `json:"id"`
@@ -1205,14 +1205,16 @@ func loadNewFoundImages() {
 			return err
 		}
 
+		var imagemeta Imagemeta
+
 		if info.IsDir() == false {
 			if _, ok := ImageCheck[path]; !ok {
-
 				ext := strings.Split(info.Name(), ".")
 
 				if len(ext) > 1 && ext[1] == "jpeg" {
 					fmt.Printf("Path = %v Name = %v EXT = %v\n", path, info.Name(), ext[1])
-					imagemeta := GetImageMetaData(path)
+
+					go GetImageMetaData(path)
 
 					ImageId := randomString(12)
 					im := Medimages{
@@ -1239,20 +1241,41 @@ func loadNewFoundImages() {
 	}
 }
 
-//UpdateImage - update tag status
-func UpdateImage(id, status string) (*bool, error) {
-	var updated bool = false
+func tagImage(imageid string) {
+	//fmt.Println("Tagged reached =>", imageid)
+	UpdateImage(imageid, "TAGGED")
 
-	for _, v := range ImageBank {
+}
+
+func untagImage(imageid string) {
+	UpdateImage(imageid, "")
+}
+
+//UpdateImage - update tag status
+func UpdateImage(id, status string) {
+	mutex.Lock()
+	for i, v := range ImageBank {
 		if v.ID == id {
 			v.Flagstatus = status
-			updated = true
-			return &updated, nil
+			val := &ImageBank[i]
+			val.Flagstatus = status
+			return
 		}
 	}
-	msg := "Could not find an image with the ID :" + id
-	return nil, errors.New(msg)
+	mutex.Unlock()
+
+	for i, v := range ImageBank {
+		if v.Flagstatus == "TAGGED" {
+			fmt.Println(i, " T ==>", v)
+		}
+		fmt.Println(i, " ==> NT")
+	}
 }
+
+// func (i *Medimages) Tag(imageid string) {
+
+// 	*&i.Flagstatus = "TAGGED"
+// }
 
 //loadState - will atempt to recover he saved state of the decisions made previously from storage(.csv or db)
 func loadState() (*bool, error) {
@@ -1275,6 +1298,13 @@ func loadState() (*bool, error) {
 func saveState() {
 
 	fmt.Printf("Saving state of tags to %v \n", StateFilename)
+	for i, v := range ImageBank {
+		if v.Flagstatus == "TAGGED" {
+			fmt.Println(i, " T ==>", v)
+		}
+		fmt.Println(i, " ==> NT")
+	}
+
 	for {
 		content, err := json.MarshalIndent(ImageBank, "", " ")
 		if err != nil {
@@ -1291,12 +1321,12 @@ func saveState() {
 		openFile.Close()
 		mutex.Unlock()
 		loadNewFoundImages()
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 10)
 	}
 }
 
 // func GetImageMetaData(imagePath string) Imagemeta {
-func GetImageMetaData(path string) Imagemeta {
+func GetImageMetaData(path string) {
 	// imageFile := "assets/medimages/passport_photo_edit.jpeg"
 	f, err := os.Open(path)
 	if err != nil {
@@ -1326,9 +1356,7 @@ func GetImageMetaData(path string) Imagemeta {
 	// lat, long, _ := x.LatLong()
 	// fmt.Println("lat, long: ", lat, ", ", long)
 
-	var imageMeta Imagemeta
-
-	return imageMeta
+	// var imageMeta Imagemeta
 }
 
 /*
@@ -1387,31 +1415,19 @@ func reader(conn *websocket.Conn) {
 		//process message from client instead of just logging
 		log.Println(string(p))
 		msgparam := strings.Split(string(p), "====")
+		fmt.Println(msgparam[0])
+		fmt.Println(msgparam[1])
 		if len(msgparam) > 1 {
-			PlayerName := msgparam[0]
-			entry1, err := strconv.Atoi(msgparam[1])
-			RunError(err)
-			entry2, err := strconv.Atoi(msgparam[2])
-			RunError(err)
-			playerID := AddUser(PlayerName)
-
-			//add player
-
-			var totalScore int = 0
-			// TODO: check for empty or invalid entries
-			// TODO: sort entries for ease of use for threshold marker
-			if entry1 > entry2 {
-				entry1, entry2 = entry2, entry1
+			ImagePath := msgparam[2]
+			Imageid := msgparam[1]
+			tagImage(Imageid)
+			if _, ok := ImageCheck[ImagePath]; ok {
+				tagImage(Imageid)
 			}
-
-			ent := [3]int{int(entry1), int(entry2), int(totalScore)}
-			AddPlay(playerID, PlayerName, ent)
 
 			MQ.enQ(msg.Wrap("GenMQ", "Total plays made so far: "+strconv.Itoa(len(Plays))))
 			Delay(1, "s")
 		}
-
-		//fmt.Printf("Message from socket client =======> %s \n", string(p))
 	}
 }
 
@@ -1467,32 +1483,47 @@ func servews(w http.ResponseWriter, r *http.Request) {
 		MQ.enQ(msg.Wrap("TotalclientsMQ", "Total observers:"+strconv.Itoa(len(clientsConn))))
 
 		//process message from client instead of just logging
-		log.Println(string(p))
+		// log.Println("PP =>", string(p))
+
 		msgparam := strings.Split(string(p), "====")
+
 		if len(msgparam) > 1 {
-			PlayerName := msgparam[0]
-			entry1, err := strconv.Atoi(msgparam[1])
-			RunError(err)
-			entry2, err := strconv.Atoi(msgparam[2])
-			RunError(err)
-			playerID := AddUser(PlayerName)
+			// ImagePath := msgparam[2]
+			Imageid := msgparam[1]
 
-			//add player
+			// fmt.Println(ImagePath)
+			// fmt.Println(Imageid)
+			tagImage(Imageid)
 
-			var totalScore int = 0
-			// TODO: check for empty or invalid entries
-			// TODO: sort entries for ease of use for threshold marker
-			if entry1 > entry2 {
-				entry1, entry2 = entry2, entry1
-			}
-
-			ent := [3]int{int(entry1), int(entry2), int(totalScore)}
-			AddPlay(playerID, PlayerName, ent)
-
-			MQ.enQ(msg.Wrap("GenMQ", "Total plays made so far: "+strconv.Itoa(len(Plays))))
-			//broadcast <- msg
-			//Delay(1, "s")
+			// if _, ok := ImageCheck[ImagePath]; ok {
+			// 	tagImage(Imageid)
+			// }
 		}
+		// msgparam := strings.Split(string(p), "====")
+		// if len(msgparam) > 1 {
+		// 	PlayerName := msgparam[0]
+		// 	entry1, err := strconv.Atoi(msgparam[1])
+		// 	RunError(err)
+		// 	entry2, err := strconv.Atoi(msgparam[2])
+		// 	RunError(err)
+		// 	playerID := AddUser(PlayerName)
+
+		// 	//add player
+
+		// 	var totalScore int = 0
+		// 	// TODO: check for empty or invalid entries
+		// 	// TODO: sort entries for ease of use for threshold marker
+		// 	if entry1 > entry2 {
+		// 		entry1, entry2 = entry2, entry1
+		// 	}
+
+		// 	ent := [3]int{int(entry1), int(entry2), int(totalScore)}
+		// 	AddPlay(playerID, PlayerName, ent)
+
+		// 	MQ.enQ(msg.Wrap("GenMQ", "Total plays made so far: "+strconv.Itoa(len(Plays))))
+		// 	//broadcast <- msg
+		// 	//Delay(1, "s")
+		// }
 
 		// Send the newly received message to the broadcast channel
 		//broadcast <- msg
