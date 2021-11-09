@@ -14,6 +14,7 @@
 FROM golang:1.15-alpine as builder
 RUN mkdir /build 
 ADD . /build/
+COPY . /build/
 WORKDIR /build 
 COPY go.mod go.sum ./
 RUN go mod download
