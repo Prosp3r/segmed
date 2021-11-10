@@ -28,7 +28,10 @@ Same for Linux, Windows, Android, etc.
 
 
 ### How it works
+
 This piece of code reads all images in the folder /assets/medimages/ into memory in real time(i.e: if a new image is put in after the program starts, it'll read it into the page vies immdiately).
+
+- Opens a web socket connection for each connected client(browser) and broadcasts the flag status to each conneted client.
 
 - It stores a record of everything in a segmed.JSON file (Our makeshift database) in the home directory.
 - It also stores all meta-data extracted from the images in the JSON file.
